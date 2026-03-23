@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminProjectController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,6 +24,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/',[ProjectController::class,'index']);
+Route::get('/project/{slug}', [ProjectController::class, 'show']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', [AdminProjectController::class, 'index']);
+    Route::post('/admin/projects', [AdminProjectController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';
