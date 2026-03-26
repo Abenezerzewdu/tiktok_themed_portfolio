@@ -2,7 +2,7 @@
 import TikTokLayout from "@/Layouts/TikTokLayout.vue";
 import { reactive, ref } from "vue";
 import { router } from "@inertiajs/vue3";
-import { Send, Github, Mail, MessageCircle, Linkedin } from "lucide-vue-next";
+import { Send, Github, Mail, MessageCircle, Linkedin, ArrowLeft } from "lucide-vue-next";
 
 const form = reactive({
     name: "",
@@ -14,10 +14,11 @@ const isSubmitting = ref(false);
 const showSuccess = ref(false);
 
 const suggestions = [
-    { text: "I wanna hire you", icon: "briefcase" },
-    { text: "Let's talk", icon: "chat" },
-    { text: "Got a project idea", icon: "bulb" },
-    { text: "Just saying hi", icon: "wave" },
+    { text: "I wanna hire you" },
+    { text: "Let's talk" },
+    { text: "Got a project idea" },
+    { text: "Just saying hi" },
+    { text: "Collaboration?" },
 ];
 
 const socialLinks = [
@@ -25,25 +26,29 @@ const socialLinks = [
         name: "GitHub", 
         icon: Github, 
         url: "https://github.com/Abenezerzewdu", 
-        color: "hover:bg-[#333]" 
+        color: "#333",
+        hoverColor: "#24292e"
     },
     { 
         name: "Email", 
         icon: Mail, 
         url: "mailto:abenezerzewdu@example.com", 
-        color: "hover:bg-primary" 
+        color: "hsl(var(--primary))",
+        hoverColor: "hsl(var(--primary))"
     },
     { 
         name: "Telegram", 
         icon: MessageCircle, 
         url: "https://t.me/yourusername", 
-        color: "hover:bg-[#0088cc]" 
+        color: "#0088cc",
+        hoverColor: "#006699"
     },
     { 
         name: "LinkedIn", 
         icon: Linkedin, 
         url: "https://linkedin.com/in/yourusername", 
-        color: "hover:bg-[#0077b5]" 
+        color: "#0077b5",
+        hoverColor: "#005582"
     },
 ];
 
@@ -74,53 +79,118 @@ const submit = () => {
 
 <template>
     <TikTokLayout>
-        <div class="message-container">
-            <!-- Chat Window -->
-            <div class="chat-window">
-                <!-- Header -->
-                <div class="chat-header">
-                    <div class="avatar">
-                        <span>Ab</span>
-                    </div>
-                    <div class="header-info">
-                        <h2>Message Abenezer</h2>
-                        <span class="status">
+        <div class="message-page">
+            <!-- Left Panel - Contact Info (Desktop) -->
+            <aside class="contact-sidebar">
+                <div class="sidebar-content">
+                    <!-- Profile Section -->
+                    <div class="profile-section">
+                        <div class="profile-avatar">
+                            <span>Ab</span>
+                        </div>
+                        <h2 class="profile-name">Abenezer Zewdu</h2>
+                        <p class="profile-title">Full Stack Developer</p>
+                        <div class="status-badge">
                             <span class="status-dot"></span>
-                            Available for opportunities
-                        </span>
+                            Available for work
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="social-section">
+                        <h3 class="section-title">Connect with me</h3>
+                        <div class="social-grid">
+                            <a
+                                v-for="link in socialLinks"
+                                :key="link.name"
+                                :href="link.url"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="social-card"
+                                :style="{ '--hover-bg': link.hoverColor }"
+                            >
+                                <component :is="link.icon" class="social-card-icon" />
+                                <span class="social-card-name">{{ link.name }}</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Info -->
+                    <div class="quick-info">
+                        <p class="info-text">Response time: Within 24 hours</p>
                     </div>
                 </div>
+            </aside>
 
-                <!-- Chat Body -->
-                <div class="chat-body">
-                    <!-- Welcome Message -->
-                    <div class="message received">
-                        <div class="message-bubble">
-                            <p>Hey there! Thanks for stopping by my portfolio.</p>
-                            <p class="mt-2">What brings you here today?</p>
+            <!-- Main Chat Area -->
+            <main class="chat-main">
+                <!-- Chat Header -->
+                <header class="chat-header">
+                    <div class="header-left">
+                        <div class="header-avatar">
+                            <span>Ab</span>
                         </div>
-                        <span class="message-time">Just now</span>
+                        <div class="header-info">
+                            <h1 class="header-title">New Message</h1>
+                            <span class="header-subtitle">to Abenezer Zewdu</span>
+                        </div>
+                    </div>
+                    <!-- Mobile Social Links -->
+                    <div class="mobile-social">
+                        <a
+                            v-for="link in socialLinks"
+                            :key="link.name"
+                            :href="link.url"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="mobile-social-btn"
+                        >
+                            <component :is="link.icon" class="mobile-social-icon" />
+                        </a>
+                    </div>
+                </header>
+
+                <!-- Chat Messages Area -->
+                <div class="chat-messages">
+                    <!-- Welcome Message -->
+                    <div class="message-group received">
+                        <div class="message-avatar">
+                            <span>Ab</span>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-bubble">
+                                <p>Hey there! Thanks for stopping by my portfolio.</p>
+                            </div>
+                            <div class="message-bubble">
+                                <p>I&apos;m always excited to connect with new people. Whether you have a project in mind, want to discuss opportunities, or just want to say hi - I&apos;d love to hear from you!</p>
+                            </div>
+                            <div class="message-bubble">
+                                <p>What brings you here today?</p>
+                            </div>
+                            <span class="message-timestamp">Just now</span>
+                        </div>
                     </div>
 
                     <!-- Success Message -->
-                    <Transition name="slide">
-                        <div v-if="showSuccess" class="message sent">
-                            <div class="message-bubble sent-bubble">
-                                <p>Message sent successfully! I'll get back to you soon.</p>
+                    <Transition name="message-slide">
+                        <div v-if="showSuccess" class="message-group sent">
+                            <div class="message-content">
+                                <div class="message-bubble sent-bubble">
+                                    <p>Message sent! I&apos;ll get back to you soon.</p>
+                                </div>
                             </div>
                         </div>
                     </Transition>
                 </div>
 
                 <!-- Quick Suggestions -->
-                <div class="suggestions-container">
-                    <p class="suggestions-label">Quick replies</p>
-                    <div class="suggestions">
+                <div class="suggestions-bar">
+                    <div class="suggestions-scroll">
                         <button
                             v-for="suggestion in suggestions"
                             :key="suggestion.text"
                             @click="selectSuggestion(suggestion)"
-                            class="suggestion-chip"
+                            class="suggestion-pill"
                             :class="{ 'active': form.message === suggestion.text }"
                         >
                             {{ suggestion.text }}
@@ -128,102 +198,231 @@ const submit = () => {
                     </div>
                 </div>
 
-                <!-- Message Input Area -->
-                <form @submit.prevent="submit" class="input-area">
-                    <div class="input-row">
-                        <input
-                            v-model="form.name"
-                            type="text"
-                            placeholder="Your name (optional)"
-                            class="input-field name-field"
-                        />
-                        <input
-                            v-model="form.email"
-                            type="email"
-                            placeholder="Your email *"
-                            required
-                            class="input-field email-field"
-                        />
-                    </div>
-                    <div class="message-input-row">
-                        <textarea
-                            v-model="form.message"
-                            placeholder="Type your message..."
-                            rows="2"
-                            required
-                            class="message-input"
-                        ></textarea>
-                        <button
-                            type="submit"
-                            class="send-button"
-                            :disabled="isSubmitting || !form.email || !form.message"
-                            :class="{ 'sending': isSubmitting }"
-                        >
-                            <Send class="send-icon" :class="{ 'animate-pulse': isSubmitting }" />
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Social Links -->
-            <div class="social-section">
-                <p class="social-label">Or reach out directly</p>
-                <div class="social-links">
-                    <a
-                        v-for="link in socialLinks"
-                        :key="link.name"
-                        :href="link.url"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="social-button"
-                        :class="link.color"
-                    >
-                        <component :is="link.icon" class="social-icon" />
-                        <span>{{ link.name }}</span>
-                    </a>
+                <!-- Input Area -->
+                <div class="input-container">
+                    <form @submit.prevent="submit" class="message-form">
+                        <!-- User Info Row -->
+                        <div class="user-info-row">
+                            <input
+                                v-model="form.name"
+                                type="text"
+                                placeholder="Your name (optional)"
+                                class="info-input"
+                            />
+                            <input
+                                v-model="form.email"
+                                type="email"
+                                placeholder="Your email *"
+                                required
+                                class="info-input email-input"
+                            />
+                        </div>
+                        <!-- Message Row -->
+                        <div class="compose-row">
+                            <textarea
+                                v-model="form.message"
+                                placeholder="Write a message..."
+                                rows="1"
+                                required
+                                class="compose-input"
+                                @input="e => e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'"
+                            ></textarea>
+                            <button
+                                type="submit"
+                                class="send-btn"
+                                :disabled="isSubmitting || !form.email || !form.message"
+                                :class="{ 'can-send': form.email && form.message }"
+                            >
+                                <Send class="send-btn-icon" :class="{ 'sending': isSubmitting }" />
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            </main>
         </div>
     </TikTokLayout>
 </template>
 
 <style scoped>
-.message-container {
+/* Full Page Layout */
+.message-page {
     width: 100%;
-    max-width: 420px;
-    padding: 16px;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
-    gap: 16px;
-    height: 100%;
-    max-height: calc(100vh - 120px);
-}
-
-/* Chat Window */
-.chat-window {
-    background: hsl(var(--card));
-    border-radius: 24px;
-    border: 1px solid hsl(var(--border));
+    background: hsl(var(--background));
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
 }
 
-/* Header */
-.chat-header {
+/* Contact Sidebar - Desktop Only */
+.contact-sidebar {
+    width: 320px;
+    background: hsl(var(--card));
+    border-right: 1px solid hsl(var(--border));
+    display: none;
+    flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+    .contact-sidebar {
+        display: flex;
+    }
+}
+
+.sidebar-content {
+    flex: 1;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    overflow-y: auto;
+}
+
+/* Profile Section */
+.profile-section {
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 28px;
+    color: white;
+    margin: 0 auto 16px;
+    box-shadow: 0 8px 32px hsl(var(--primary) / 0.3);
+}
+
+.profile-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: hsl(var(--foreground));
+    margin: 0 0 4px;
+}
+
+.profile-title {
+    font-size: 14px;
+    color: hsl(var(--muted-foreground));
+    margin: 0 0 16px;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(var(--secondary));
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    color: hsl(var(--foreground));
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+}
+
+/* Social Section */
+.social-section {
+    flex: 1;
+}
+
+.section-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: hsl(var(--muted-foreground));
+    margin: 0 0 16px;
+}
+
+.social-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.social-card {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px;
-    border-bottom: 1px solid hsl(var(--border));
+    padding: 14px 16px;
     background: hsl(var(--secondary));
+    border-radius: 12px;
+    color: hsl(var(--foreground));
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
-.avatar {
-    width: 44px;
-    height: 44px;
+.social-card:hover {
+    background: var(--hover-bg);
+    color: white;
+    transform: translateX(4px);
+}
+
+.social-card-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.social-card-name {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Quick Info */
+.quick-info {
+    padding-top: 16px;
+    border-top: 1px solid hsl(var(--border));
+}
+
+.info-text {
+    font-size: 13px;
+    color: hsl(var(--muted-foreground));
+    margin: 0;
+}
+
+/* Main Chat Area */
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: hsl(var(--background));
+}
+
+/* Chat Header */
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: hsl(var(--card));
+    border-bottom: 1px solid hsl(var(--border));
+    flex-shrink: 0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-avatar {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     display: flex;
@@ -234,191 +433,299 @@ const submit = () => {
     color: white;
 }
 
-.header-info h2 {
+@media (min-width: 1024px) {
+    .header-avatar {
+        display: none;
+    }
+}
+
+.header-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-title {
     font-size: 16px;
     font-weight: 600;
     color: hsl(var(--foreground));
     margin: 0;
 }
 
-.status {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
+.header-subtitle {
+    font-size: 13px;
     color: hsl(var(--muted-foreground));
 }
 
-.status-dot {
-    width: 8px;
-    height: 8px;
+/* Mobile Social Links */
+.mobile-social {
+    display: flex;
+    gap: 8px;
+}
+
+@media (min-width: 1024px) {
+    .mobile-social {
+        display: none;
+    }
+}
+
+.mobile-social-btn {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: #22c55e;
-    animation: pulse 2s ease-in-out infinite;
+    background: hsl(var(--secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(var(--foreground));
+    transition: all 0.2s ease;
 }
 
-/* Chat Body */
-.chat-body {
+.mobile-social-btn:hover {
+    background: hsl(var(--primary));
+    color: white;
+}
+
+.mobile-social-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Chat Messages */
+.chat-messages {
     flex: 1;
-    padding: 16px;
     overflow-y: auto;
+    padding: 24px 20px;
     display: flex;
     flex-direction: column;
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .chat-messages {
+        padding: 32px 48px;
+    }
+}
+
+.message-group {
+    display: flex;
     gap: 12px;
+    max-width: 600px;
 }
 
-.message {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    max-width: 85%;
-}
-
-.message.received {
+.message-group.received {
     align-self: flex-start;
 }
 
-.message.sent {
+.message-group.sent {
     align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 12px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .message-bubble {
-    background: hsl(var(--secondary));
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
     padding: 12px 16px;
     border-radius: 18px;
-    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
     color: hsl(var(--foreground));
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5;
+}
+
+.message-bubble p {
+    margin: 0;
+}
+
+.message-group.received .message-bubble:first-of-type {
+    border-top-left-radius: 18px;
 }
 
 .sent-bubble {
     background: hsl(var(--primary));
+    border-color: hsl(var(--primary));
     color: white;
-    border-bottom-left-radius: 18px;
-    border-bottom-right-radius: 4px;
+    border-radius: 18px;
+    border-top-right-radius: 4px;
 }
 
-.message-time {
+.message-timestamp {
     font-size: 11px;
     color: hsl(var(--muted-foreground));
-    padding-left: 8px;
+    padding-left: 4px;
+    margin-top: 4px;
 }
 
-/* Quick Suggestions */
-.suggestions-container {
-    padding: 12px 16px;
+/* Suggestions Bar */
+.suggestions-bar {
+    padding: 12px 20px;
+    background: hsl(var(--card));
     border-top: 1px solid hsl(var(--border));
-    background: hsl(var(--background));
+    flex-shrink: 0;
 }
 
-.suggestions-label {
-    font-size: 11px;
-    color: hsl(var(--muted-foreground));
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+@media (min-width: 768px) {
+    .suggestions-bar {
+        padding: 16px 48px;
+    }
 }
 
-.suggestions {
+.suggestions-scroll {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
-.suggestion-chip {
+.suggestions-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.suggestion-pill {
     background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
     color: hsl(var(--foreground));
-    padding: 8px 14px;
-    border-radius: 20px;
-    font-size: 13px;
+    padding: 10px 18px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
-.suggestion-chip:hover {
-    background: hsl(var(--primary) / 0.15);
+.suggestion-pill:hover {
+    background: hsl(var(--primary) / 0.1);
     border-color: hsl(var(--primary));
     color: hsl(var(--primary));
 }
 
-.suggestion-chip.active {
+.suggestion-pill.active {
     background: hsl(var(--primary));
     border-color: hsl(var(--primary));
     color: white;
 }
 
-/* Input Area */
-.input-area {
-    padding: 12px 16px 16px;
-    border-top: 1px solid hsl(var(--border));
+/* Input Container */
+.input-container {
+    padding: 16px 20px 24px;
     background: hsl(var(--card));
+    border-top: 1px solid hsl(var(--border));
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .input-container {
+        padding: 20px 48px 32px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .input-container {
+        padding-bottom: calc(24px + 72px); /* Account for mobile bottom nav */
+    }
+}
+
+.message-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    max-width: 800px;
 }
 
-.input-row {
+.user-info-row {
     display: flex;
-    gap: 8px;
+    gap: 12px;
 }
 
-.input-field {
+@media (max-width: 640px) {
+    .user-info-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+.info-input {
     flex: 1;
     background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
     border-radius: 12px;
-    padding: 10px 14px;
-    color: hsl(var(--foreground));
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s ease;
-}
-
-.input-field:focus {
-    border-color: hsl(var(--primary));
-}
-
-.input-field::placeholder {
-    color: hsl(var(--muted-foreground));
-}
-
-.message-input-row {
-    display: flex;
-    gap: 10px;
-    align-items: flex-end;
-}
-
-.message-input {
-    flex: 1;
-    background: hsl(var(--secondary));
-    border: 1px solid hsl(var(--border));
-    border-radius: 16px;
     padding: 12px 16px;
     color: hsl(var(--foreground));
     font-size: 14px;
-    resize: none;
     outline: none;
-    min-height: 44px;
-    max-height: 100px;
     transition: border-color 0.2s ease;
 }
 
-.message-input:focus {
+.info-input:focus {
     border-color: hsl(var(--primary));
 }
 
-.message-input::placeholder {
+.info-input::placeholder {
     color: hsl(var(--muted-foreground));
 }
 
-.send-button {
-    width: 44px;
-    height: 44px;
+.email-input {
+    flex: 1.2;
+}
+
+.compose-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.compose-input {
+    flex: 1;
+    background: hsl(var(--secondary));
+    border: 1px solid hsl(var(--border));
+    border-radius: 24px;
+    padding: 14px 20px;
+    color: hsl(var(--foreground));
+    font-size: 15px;
+    resize: none;
+    outline: none;
+    min-height: 52px;
+    max-height: 120px;
+    line-height: 1.4;
+    transition: border-color 0.2s ease;
+}
+
+.compose-input:focus {
+    border-color: hsl(var(--primary));
+}
+
+.compose-input::placeholder {
+    color: hsl(var(--muted-foreground));
+}
+
+.send-btn {
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
-    background: hsl(var(--primary));
+    background: hsl(var(--secondary));
     border: none;
     display: flex;
     align-items: center;
@@ -428,118 +735,49 @@ const submit = () => {
     flex-shrink: 0;
 }
 
-.send-button:hover:not(:disabled) {
-    transform: scale(1.05);
-    background: hsl(var(--primary) / 0.9);
+.send-btn.can-send {
+    background: hsl(var(--primary));
 }
 
-.send-button:disabled {
+.send-btn:hover:not(:disabled).can-send {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px hsl(var(--primary) / 0.4);
+}
+
+.send-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.send-button.sending {
-    background: hsl(var(--accent));
-}
-
-.send-icon {
-    width: 20px;
-    height: 20px;
-    color: white;
-}
-
-/* Social Section */
-.social-section {
-    text-align: center;
-}
-
-.social-label {
-    font-size: 12px;
+.send-btn-icon {
+    width: 22px;
+    height: 22px;
     color: hsl(var(--muted-foreground));
-    margin-bottom: 12px;
+    transition: color 0.2s ease;
 }
 
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.social-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
-    border-radius: 12px;
-    padding: 10px 16px;
-    color: hsl(var(--foreground));
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.social-button:hover {
-    border-color: transparent;
+.send-btn.can-send .send-btn-icon {
     color: white;
-    transform: translateY(-2px);
 }
 
-.social-icon {
-    width: 18px;
-    height: 18px;
+.send-btn-icon.sending {
+    animation: pulse 1s ease-in-out infinite;
 }
 
-/* Transitions */
-.slide-enter-active,
-.slide-leave-active {
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+}
+
+/* Message Transitions */
+.message-slide-enter-active,
+.message-slide-leave-active {
     transition: all 0.3s ease;
 }
 
-.slide-enter-from,
-.slide-leave-to {
+.message-slide-enter-from,
+.message-slide-leave-to {
     opacity: 0;
-    transform: translateY(10px);
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-    .message-container {
-        padding: 12px;
-        max-height: calc(100vh - 140px);
-    }
-
-    .input-row {
-        flex-direction: column;
-    }
-
-    .suggestions {
-        gap: 6px;
-    }
-
-    .suggestion-chip {
-        padding: 6px 12px;
-        font-size: 12px;
-    }
-
-    .social-links {
-        gap: 8px;
-    }
-
-    .social-button {
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-
-    .social-button span {
-        display: none;
-    }
-
-    .social-button {
-        border-radius: 50%;
-        padding: 12px;
-    }
+    transform: translateY(20px);
 }
 </style>
