@@ -58,21 +58,28 @@ const handleDragLeave = () => {
 
 const submit = () => {
     isUploading.value = true;
+
     const data = new FormData();
 
-    Object.keys(form.value).forEach((key) => {
-        data.append(key, form.value[key]);
-    });
+    data.append("title", form.value.title);
+    data.append("description", form.value.description);
+    data.append("video", form.value.video); // 🔥 explicit
+    data.append("github_url", form.value.github_url || "");
+    data.append("live_url", form.value.live_url || "");
+    data.append("tech_stack", form.value.tech_stack || "");
 
     router.post("/admin/projects", data, {
+        forceFormData: true, // 🔥 critical for files
         onSuccess: () => {
             isUploading.value = false;
             uploadSuccess.value = true;
+
             setTimeout(() => {
                 uploadSuccess.value = false;
             }, 3000);
         },
-        onError: () => {
+        onError: (errors) => {
+            console.log(errors); // 🔥 SEE what's failing
             isUploading.value = false;
         },
     });
@@ -94,7 +101,7 @@ const isFormValid = () => {
                 <div>
                     <h1 class="page-title">Upload Project</h1>
                     <p class="page-subtitle">
-                        Share your work with the community
+                        Lets Share my work with the community
                     </p>
                 </div>
             </div>
@@ -120,7 +127,10 @@ const isFormValid = () => {
                     <div
                         :class="[
                             'upload-zone',
-                            { 'drag-active': dragActive, 'has-video': videoPreview },
+                            {
+                                'drag-active': dragActive,
+                                'has-video': videoPreview,
+                            },
                         ]"
                         @drop="handleDrop"
                         @dragover="handleDragOver"
@@ -210,7 +220,9 @@ const isFormValid = () => {
                             placeholder="Vue, Laravel, Tailwind CSS"
                             class="form-input"
                         />
-                        <p class="form-hint">Separate technologies with commas</p>
+                        <p class="form-hint">
+                            Separate technologies with commas
+                        </p>
                     </div>
 
                     <!-- GitHub URL -->
@@ -247,14 +259,16 @@ const isFormValid = () => {
                     <button
                         @click="submit"
                         :disabled="!isFormValid() || isUploading"
-                        :class="[
-                            'submit-btn',
-                            { 'is-loading': isUploading },
-                        ]"
+                        :class="['submit-btn', { 'is-loading': isUploading }]"
                     >
-                        <Loader2 v-if="isUploading" class="h-5 w-5 animate-spin" />
+                        <Loader2
+                            v-if="isUploading"
+                            class="h-5 w-5 animate-spin"
+                        />
                         <Upload v-else class="h-5 w-5" />
-                        <span>{{ isUploading ? "Uploading..." : "Upload Project" }}</span>
+                        <span>{{
+                            isUploading ? "Uploading..." : "Upload Project"
+                        }}</span>
                     </button>
                 </div>
             </div>

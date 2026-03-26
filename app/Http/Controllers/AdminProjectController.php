@@ -14,8 +14,15 @@ class AdminProjectController extends Controller
     public function index(){
       return Inertia::render('Admin');
     }
+
+
     public function store(Request $request){
     //validate
+    //  dd([
+    //     'hasFile' => $request->hasFile('video'),
+    //     'file' => $request->file('video'),
+    //     'all' => $request->all(),
+    // ]);
     $request->validate([
             'title' => 'required|string',
             'video' => 'required|file|mimes:mp4,mov,avi|max:20000',
@@ -36,9 +43,15 @@ class AdminProjectController extends Controller
             'live_url' => $request->live_url,
             'tech_stack' => explode(',', $request->tech_stack),
         ]);
-
+// dd($request->file('video'));
+// stores files less that 2mb since herd php.ini is not editable
     //redirect 
         return redirect('/admin');
 
+    }
+
+    public function message(){
+    
+    return  Inertia::render('Message');
     }
 }

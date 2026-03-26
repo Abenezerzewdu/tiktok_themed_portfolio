@@ -29,10 +29,10 @@ const toggleMobileMenu = () => {
             <!-- Logo -->
             <div class="flex items-center gap-3 px-6 py-5">
                 <div
-                    class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary"
+                    class="flex h-10 w-30 items-center justify-center rounded-lg bg-primary"
                 >
                     <span class="text-lg font-bold text-primary-foreground"
-                        >A</span
+                        >Ab's</span
                     >
                 </div>
                 <span class="text-xl font-bold text-foreground">Portfolio</span>
@@ -68,7 +68,7 @@ const toggleMobileMenu = () => {
                         <Users
                             class="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors"
                         />
-                        <span class="font-medium">Following</span>
+                        <span class="font-medium">Profile</span>
                     </Link>
 
                     <Link
@@ -82,13 +82,13 @@ const toggleMobileMenu = () => {
                     </Link>
 
                     <Link
-                        href="#"
+                        href="/message"
                         class="group flex items-center gap-4 rounded-lg px-4 py-3 text-foreground transition-all duration-200 hover:bg-secondary"
                     >
                         <MessageCircle
                             class="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors"
                         />
-                        <span class="font-medium">Messages</span>
+                        <span class="font-medium">Message</span>
                     </Link>
                 </div>
 
@@ -169,7 +169,7 @@ const toggleMobileMenu = () => {
                     class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary"
                 >
                     <span class="text-sm font-bold text-primary-foreground"
-                        >A</span
+                        >Ab</span
                     >
                 </div>
                 <span class="text-lg font-bold text-foreground">Portfolio</span>

@@ -32,6 +32,13 @@ Route::get('/project/{slug}', [ProjectController::class, 'show']);
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminProjectController::class, 'index']);
     Route::post('/admin/projects', [AdminProjectController::class, 'store']);
+    
+
+});
+Route::get('/phpinfo', function () {
+    phpinfo();
 });
 
-require __DIR__.'/auth.php';
+Route::get('/message', [AdminProjectController::class, 'message']);
+Route::post('/message',[AdminProjectController::class,'storeMessage']);
+  require __DIR__.'/auth.php';

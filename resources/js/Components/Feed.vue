@@ -46,7 +46,10 @@ onUnmounted(() => {
             class="feed-item"
             :class="{ 'is-active': index === currentIndex }"
         >
-            <ProjectCard :project="project" :isActive="index === currentIndex" />
+            <ProjectCard
+                :project="project"
+                :isActive="index === currentIndex"
+            />
         </div>
 
         <!-- Empty state -->
