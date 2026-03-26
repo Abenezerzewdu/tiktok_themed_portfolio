@@ -21,29 +21,29 @@ const suggestions = [
 ];
 
 const socialLinks = [
-    { 
-        name: "GitHub", 
-        icon: Github, 
-        url: "https://github.com/Abenezerzewdu", 
-        color: "hover:bg-[#333]" 
+    {
+        name: "GitHub",
+        icon: Github,
+        url: "https://github.com/Abenezerzewdu",
+        color: "hover:bg-[#333]",
     },
-    { 
-        name: "Email", 
-        icon: Mail, 
-        url: "mailto:abenezerzewdu@example.com", 
-        color: "hover:bg-primary" 
+    {
+        name: "Email",
+        icon: Mail,
+        url: "mailto:abenezerzewdu11@gmail.com",
+        color: "hover:bg-primary",
     },
-    { 
-        name: "Telegram", 
-        icon: MessageCircle, 
-        url: "https://t.me/yourusername", 
-        color: "hover:bg-[#0088cc]" 
+    {
+        name: "Telegram",
+        icon: MessageCircle,
+        url: "https://t.me/Abenaww",
+        color: "hover:bg-[#0088cc]",
     },
-    { 
-        name: "LinkedIn", 
-        icon: Linkedin, 
-        url: "https://linkedin.com/in/yourusername", 
-        color: "hover:bg-[#0077b5]" 
+    {
+        name: "LinkedIn",
+        icon: Linkedin,
+        url: "https://linkedin.com/in/yourusername",
+        color: "hover:bg-[#0077b5]",
     },
 ];
 
@@ -53,7 +53,7 @@ const selectSuggestion = (suggestion) => {
 
 const submit = () => {
     if (!form.email || !form.message) return;
-    
+
     isSubmitting.value = true;
     router.post("/message", form, {
         onSuccess: () => {
@@ -96,7 +96,9 @@ const submit = () => {
                     <!-- Welcome Message -->
                     <div class="message received">
                         <div class="message-bubble">
-                            <p>Hey there! Thanks for stopping by my portfolio.</p>
+                            <p>
+                                Hey there! Thanks for stopping by my portfolio.
+                            </p>
                             <p class="mt-2">What brings you here today?</p>
                         </div>
                         <span class="message-time">Just now</span>
@@ -106,7 +108,10 @@ const submit = () => {
                     <Transition name="slide">
                         <div v-if="showSuccess" class="message sent">
                             <div class="message-bubble sent-bubble">
-                                <p>Message sent successfully! I'll get back to you soon.</p>
+                                <p>
+                                    Message sent successfully! I'll get back to
+                                    you soon.
+                                </p>
                             </div>
                         </div>
                     </Transition>
@@ -121,7 +126,9 @@ const submit = () => {
                             :key="suggestion.text"
                             @click="selectSuggestion(suggestion)"
                             class="suggestion-chip"
-                            :class="{ 'active': form.message === suggestion.text }"
+                            :class="{
+                                active: form.message === suggestion.text,
+                            }"
                         >
                             {{ suggestion.text }}
                         </button>
@@ -156,10 +163,15 @@ const submit = () => {
                         <button
                             type="submit"
                             class="send-button"
-                            :disabled="isSubmitting || !form.email || !form.message"
-                            :class="{ 'sending': isSubmitting }"
+                            :disabled="
+                                isSubmitting || !form.email || !form.message
+                            "
+                            :class="{ sending: isSubmitting }"
                         >
-                            <Send class="send-icon" :class="{ 'animate-pulse': isSubmitting }" />
+                            <Send
+                                class="send-icon"
+                                :class="{ 'animate-pulse': isSubmitting }"
+                            />
                         </button>
                     </div>
                 </form>
@@ -225,7 +237,11 @@ const submit = () => {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--accent))
+    );
     display: flex;
     align-items: center;
     justify-content: center;
