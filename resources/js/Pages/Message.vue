@@ -202,40 +202,41 @@ const submit = () => {
 <style scoped>
 .message-container {
     width: 100%;
-    max-width: 420px;
-    padding: 16px;
+    max-width: 1200px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    height: 100%;
-    max-height: calc(100vh - 120px);
+    gap: 20px;
+    height: calc(100vh - 0px);
+    margin: 0 auto;
 }
 
 /* Chat Window */
 .chat-window {
     background: hsl(var(--card));
-    border-radius: 24px;
+    border-radius: 20px;
     border: 1px solid hsl(var(--border));
     overflow: hidden;
     display: flex;
     flex-direction: column;
     flex: 1;
     min-height: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Header */
 .chat-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 16px;
+    gap: 16px;
+    padding: 20px 24px;
     border-bottom: 1px solid hsl(var(--border));
-    background: hsl(var(--secondary));
+    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--background)));
 }
 
 .avatar {
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     background: linear-gradient(
         135deg,
@@ -245,9 +246,10 @@ const submit = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 14px;
     color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .header-info h2 {
@@ -261,7 +263,7 @@ const submit = () => {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 12px;
+    font-size: 11px;
     color: hsl(var(--muted-foreground));
 }
 
@@ -281,13 +283,23 @@ const submit = () => {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    background: hsl(var(--background));
+}
+
+.chat-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-body::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 99px;
 }
 
 .message {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    max-width: 85%;
+    max-width: 75%;
 }
 
 .message.received {
@@ -299,41 +311,47 @@ const submit = () => {
 }
 
 .message-bubble {
-    background: hsl(var(--secondary));
-    padding: 12px 16px;
-    border-radius: 18px;
+    background: hsl(var(--card));
+    padding: 10px 14px;
+    border-radius: 16px;
     border-bottom-left-radius: 4px;
     color: hsl(var(--foreground));
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.4;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .sent-bubble {
-    background: hsl(var(--primary));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--primary) / 0.9)
+    );
     color: white;
-    border-bottom-left-radius: 18px;
+    border-bottom-left-radius: 16px;
     border-bottom-right-radius: 4px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 .message-time {
-    font-size: 11px;
+    font-size: 10px;
     color: hsl(var(--muted-foreground));
-    padding-left: 8px;
+    padding-left: 6px;
 }
 
 /* Quick Suggestions */
 .suggestions-container {
     padding: 12px 16px;
     border-top: 1px solid hsl(var(--border));
-    background: hsl(var(--background));
+    background: hsl(var(--card));
 }
 
 .suggestions-label {
-    font-size: 11px;
+    font-size: 10px;
     color: hsl(var(--muted-foreground));
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
 }
 
 .suggestions {
@@ -346,18 +364,25 @@ const submit = () => {
     background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
     color: hsl(var(--foreground));
-    padding: 8px 14px;
-    border-radius: 20px;
-    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
+    font-weight: 400;
 }
 
 .suggestion-chip:hover {
-    background: hsl(var(--primary) / 0.15);
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary) / 0.12),
+        hsl(var(--primary) / 0.08)
+    );
     border-color: hsl(var(--primary));
     color: hsl(var(--primary));
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .suggestion-chip.active {
@@ -368,33 +393,33 @@ const submit = () => {
 
 /* Input Area */
 .input-area {
-    padding: 12px 16px 16px;
+    padding: 10px 14px 14px;
     border-top: 1px solid hsl(var(--border));
     background: hsl(var(--card));
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .input-row {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
-
 .input-field {
     flex: 1;
     background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
     border-radius: 12px;
-    padding: 10px 14px;
+    padding: 8px 12px;
     color: hsl(var(--foreground));
-    font-size: 14px;
+    font-size: 13px;
     outline: none;
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .input-field:focus {
     border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.08);
 }
 
 .input-field::placeholder {
@@ -412,18 +437,19 @@ const submit = () => {
     background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
     border-radius: 16px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     color: hsl(var(--foreground));
-    font-size: 14px;
+    font-size: 13px;
     resize: none;
     outline: none;
-    min-height: 44px;
-    max-height: 100px;
-    transition: border-color 0.2s ease;
+    min-height: 36px;
+    max-height: 80px;
+    transition: all 0.2s ease;
 }
 
 .message-input:focus {
     border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.08);
 }
 
 .message-input::placeholder {
@@ -431,10 +457,14 @@ const submit = () => {
 }
 
 .send-button {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: hsl(var(--primary));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--primary) / 0.9)
+    );
     border: none;
     display: flex;
     align-items: center;
@@ -442,11 +472,12 @@ const submit = () => {
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .send-button:hover:not(:disabled) {
-    transform: scale(1.05);
-    background: hsl(var(--primary) / 0.9);
+    transform: scale(1.05) translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .send-button:disabled {
@@ -459,20 +490,25 @@ const submit = () => {
 }
 
 .send-icon {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     color: white;
 }
 
 /* Social Section */
 .social-section {
     text-align: center;
+    padding: 10px 8px;
+    background: hsl(var(--card));
+    border-radius: 14px;
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .social-label {
-    font-size: 12px;
+    font-size: 10px;
     color: hsl(var(--muted-foreground));
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 }
 
 .social-links {
@@ -486,14 +522,14 @@ const submit = () => {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: hsl(var(--card));
+    background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
     border-radius: 12px;
-    padding: 10px 16px;
+    padding: 8px 14px;
     color: hsl(var(--foreground));
     text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 400;
     transition: all 0.2s ease;
 }
 
@@ -501,11 +537,12 @@ const submit = () => {
     border-color: transparent;
     color: white;
     transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
 
 .social-icon {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 }
 
 /* Transitions */
@@ -521,32 +558,128 @@ const submit = () => {
 }
 
 /* Responsive */
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
+    .message-container {
+        max-width: 100%;
+        padding: 20px;
+        height: calc(100vh - 0px);
+    }
+
+    .chat-header {
+        padding: 16px 20px;
+    }
+
+    .chat-body {
+        padding: 14px;
+    }
+
+    .suggestions-container {
+        padding: 10px 16px;
+    }
+
+    .input-area {
+        padding: 10px 16px 16px;
+    }
+}
+
+@media (max-width: 768px) {
     .message-container {
         padding: 12px;
-        max-height: calc(100vh - 140px);
+        height: calc(100vh - 56px);
+        max-width: 100%;
     }
 
-    .input-row {
-        flex-direction: column;
+    .chat-header {
+        padding: 12px 16px;
+        gap: 12px;
     }
 
-    .suggestions {
-        gap: 6px;
+    .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 12px;
+    }
+
+    .header-info h2 {
+        font-size: 14px;
+    }
+
+    .status {
+        font-size: 10px;
+    }
+
+    .chat-body {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .message {
+        max-width: 85%;
+    }
+
+    .message-bubble {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 14px;
+    }
+
+    .sent-bubble {
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 4px;
+    }
+
+    .suggestions-container {
+        padding: 8px 12px;
     }
 
     .suggestion-chip {
-        padding: 6px 12px;
-        font-size: 12px;
+        padding: 4px 10px;
+        font-size: 11px;
+        border-radius: 14px;
     }
 
-    .social-links {
+    .input-area {
+        padding: 8px 12px 12px;
         gap: 8px;
     }
 
-    .social-button {
+    .input-field {
+        padding: 6px 10px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+
+    .message-input {
         padding: 8px 12px;
         font-size: 12px;
+        min-height: 32px;
+        max-height: 80px;
+        border-radius: 14px;
+    }
+
+    .send-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .send-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .social-section {
+        padding: 12px;
+    }
+
+    .social-button {
+        padding: 6px 12px;
+        font-size: 11px;
+        gap: 6px;
+    }
+
+    .social-icon {
+        width: 14px;
+        height: 14px;
     }
 
     .social-button span {
@@ -555,7 +688,71 @@ const submit = () => {
 
     .social-button {
         border-radius: 50%;
-        padding: 12px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .message-container {
+        padding: 8px;
+        height: calc(100vh - 56px);
+    }
+
+    .chat-header {
+        padding: 10px 12px;
+    }
+
+    .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 11px;
+    }
+
+    .header-info h2 {
+        font-size: 13px;
+    }
+
+    .chat-body {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .message-bubble {
+        padding: 6px 10px;
+        font-size: 11px;
+        border-radius: 12px;
+    }
+
+    .sent-bubble {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .suggestion-chip {
+        padding: 3px 8px;
+        font-size: 10px;
+        border-radius: 12px;
+    }
+
+    .input-area {
+        padding: 6px 10px 10px;
+    }
+
+    .message-input {
+        padding: 6px 10px;
+        font-size: 11px;
+        min-height: 30px;
+        border-radius: 12px;
+    }
+
+    .send-button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .send-icon {
+        width: 12px;
+        height: 12px;
     }
 }
 </style>

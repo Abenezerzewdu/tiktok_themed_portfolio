@@ -238,7 +238,12 @@ const toggleMobileMenu = () => {
 
         <!-- Main Content -->
         <main
-            class="flex-1 flex justify-center items-center bg-background lg:pt-0 pt-14"
+            class="flex-1 bg-background lg:pt-0 pt-14"
+            :class="
+                page.url === '/message'
+                    ? 'flex items-stretch'
+                    : 'flex justify-center items-center'
+            "
         >
             <slot />
         </main>
