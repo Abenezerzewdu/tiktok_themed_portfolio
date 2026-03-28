@@ -10,6 +10,7 @@ import {
     MessageCircle,
     Menu,
     X,
+    BookOpen,
 } from "lucide-vue-next";
 
 const page = usePage();
@@ -65,10 +66,10 @@ const toggleMobileMenu = () => {
                         href="/me"
                         class="group flex items-center gap-4 rounded-lg px-4 py-3 text-foreground transition-all duration-200 hover:bg-secondary"
                     >
-                        <Users
+                        <BookOpen
                             class="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors"
                         />
-                        <span class="font-medium">About me</span>
+                       
                     </Link>
 
                     <Link
@@ -225,12 +226,12 @@ const toggleMobileMenu = () => {
                     </Link>
 
                     <Link
-                        href="#"
+                        href="/about"
                         @click="mobileMenuOpen = false"
                         class="flex items-center gap-4 rounded-xl px-4 py-4 text-foreground transition-all duration-200 hover:bg-secondary active:scale-95"
                     >
-                        <User class="h-6 w-6 text-muted-foreground" />
-                        <span class="text-lg font-medium">Profile</span>
+                        <BookOpen class="h-6 w-6 text-muted-foreground" />
+                        <span class="text-lg font-medium">Me</span>
                     </Link>
                 </nav>
             </div>
@@ -288,11 +289,11 @@ const toggleMobileMenu = () => {
             </Link>
 
             <Link
-                href="#"
+                href="/about"
                 class="flex flex-col items-center gap-1 px-4 py-2 transition-transform active:scale-90"
             >
-                <User class="h-6 w-6 text-muted-foreground" />
-                <span class="text-xs text-muted-foreground">Profile</span>
+                <BookOpen class="h-6 w-6 text-muted-foreground" />
+                <span class="text-xs text-muted-foreground">Me</span>
             </Link>
         </nav>
     </div>
