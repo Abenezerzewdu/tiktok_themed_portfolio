@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminProjectController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\AboutController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -41,4 +42,11 @@ Route::get('/phpinfo', function () {
 
 Route::get('/message', [AdminProjectController::class, 'message']);
 Route::post('/message',[AdminProjectController::class,'storeMessage']);
-  require __DIR__.'/auth.php';
+
+// About Chronicle routes
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::middleware(['auth'])->group(function () {
+    Route::put('/about', [AboutController::class, 'update'])->name('about.update');
+});
+
+require __DIR__.'/auth.php';
