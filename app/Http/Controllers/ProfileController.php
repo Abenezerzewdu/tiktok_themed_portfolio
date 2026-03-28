@@ -60,4 +60,8 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+//about me section on AboutChronicle page
+    public function chronicle(){
+    
+    }
 }

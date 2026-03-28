@@ -63,13 +63,13 @@ const toggleMobileMenu = () => {
                     </Link>
 
                     <Link
-                        href="/about"
+                        href="/me"
                         class="group flex items-center gap-4 rounded-lg px-4 py-3 text-foreground transition-all duration-200 hover:bg-secondary"
                     >
                         <BookOpen
                             class="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors"
                         />
-                        <span class="font-medium">Me</span>
+                       
                     </Link>
 
                     <Link
@@ -239,7 +239,12 @@ const toggleMobileMenu = () => {
 
         <!-- Main Content -->
         <main
-            class="flex-1 flex justify-center items-center bg-background lg:pt-0 pt-14"
+            class="flex-1 bg-background lg:pt-0 pt-14"
+            :class="
+                page.url === '/message'
+                    ? 'flex items-stretch'
+                    : 'flex justify-center items-center'
+            "
         >
             <slot />
         </main>

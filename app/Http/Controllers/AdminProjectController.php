@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
 use Inertia\Inertia;
 
@@ -54,4 +54,20 @@ class AdminProjectController extends Controller
     
     return  Inertia::render('Message');
     }
+
+
+
+
+    // just class hw
+    // public function apis(Request $request) {
+    // $request->validate([
+    //         'message' => 'required|string',
+    //         'data' => 'required|string'
+    //         ]);
+            
+    // return response()->json([
+    //     'message' => 'Product created',
+    //     'data' => $request->all()
+    // ]);}
+
 }

@@ -2,7 +2,7 @@
 import TikTokLayout from "@/Layouts/TikTokLayout.vue";
 import { reactive, ref } from "vue";
 import { router } from "@inertiajs/vue3";
-import { Send, Github, Mail, MessageCircle, Linkedin, ArrowLeft } from "lucide-vue-next";
+import { Send, Github, Mail, MessageCircle, Linkedin } from "lucide-vue-next";
 
 const form = reactive({
     name: "",
@@ -14,41 +14,36 @@ const isSubmitting = ref(false);
 const showSuccess = ref(false);
 
 const suggestions = [
-    { text: "I wanna hire you" },
-    { text: "Let's talk" },
-    { text: "Got a project idea" },
-    { text: "Just saying hi" },
-    { text: "Collaboration?" },
+    { text: "I wanna hire you", icon: "briefcase" },
+    { text: "Let's talk", icon: "chat" },
+    { text: "Got a project idea", icon: "bulb" },
+    { text: "Just saying hi", icon: "wave" },
 ];
 
 const socialLinks = [
-    { 
-        name: "GitHub", 
-        icon: Github, 
-        url: "https://github.com/Abenezerzewdu", 
-        color: "#333",
-        hoverColor: "#24292e"
+    {
+        name: "GitHub",
+        icon: Github,
+        url: "https://github.com/Abenezerzewdu",
+        color: "hover:bg-[#333]",
     },
-    { 
-        name: "Email", 
-        icon: Mail, 
-        url: "mailto:abenezerzewdu@example.com", 
-        color: "hsl(var(--primary))",
-        hoverColor: "hsl(var(--primary))"
+    {
+        name: "Email",
+        icon: Mail,
+        url: "mailto:abenezerzewdu11@gmail.com",
+        color: "hover:bg-primary",
     },
-    { 
-        name: "Telegram", 
-        icon: MessageCircle, 
-        url: "https://t.me/yourusername", 
-        color: "#0088cc",
-        hoverColor: "#006699"
+    {
+        name: "Telegram",
+        icon: MessageCircle,
+        url: "https://t.me/Abenaww",
+        color: "hover:bg-[#0088cc]",
     },
-    { 
-        name: "LinkedIn", 
-        icon: Linkedin, 
-        url: "https://linkedin.com/in/yourusername", 
-        color: "#0077b5",
-        hoverColor: "#005582"
+    {
+        name: "LinkedIn",
+        icon: Linkedin,
+        url: "https://linkedin.com/in/yourusername",
+        color: "hover:bg-[#0077b5]",
     },
 ];
 
@@ -58,7 +53,7 @@ const selectSuggestion = (suggestion) => {
 
 const submit = () => {
     if (!form.email || !form.message) return;
-    
+
     isSubmitting.value = true;
     router.post("/message", form, {
         onSuccess: () => {
@@ -79,246 +74,197 @@ const submit = () => {
 
 <template>
     <TikTokLayout>
-        <div class="message-page">
-            <!-- Left Panel - Contact Info (Desktop) -->
-            <aside class="contact-sidebar">
-                <div class="sidebar-content">
-                    <!-- Profile Section -->
-                    <div class="profile-section">
-                        <div class="profile-avatar">
-                            <span>Ab</span>
-                        </div>
-                        <h2 class="profile-name">Abenezer Zewdu</h2>
-                        <p class="profile-title">Full Stack Developer</p>
-                        <div class="status-badge">
+        <div class="message-container">
+            <!-- Chat Window -->
+            <div class="chat-window">
+                <!-- Header -->
+                <div class="chat-header">
+                    <div class="avatar">
+                        <span>Ab</span>
+                    </div>
+                    <div class="header-info">
+                        <h2>Message Abenezer</h2>
+                        <span class="status">
                             <span class="status-dot"></span>
-                            Available for work
-                        </div>
-                    </div>
-
-                    <!-- Social Links -->
-                    <div class="social-section">
-                        <h3 class="section-title">Connect with me</h3>
-                        <div class="social-grid">
-                            <a
-                                v-for="link in socialLinks"
-                                :key="link.name"
-                                :href="link.url"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="social-card"
-                                :style="{ '--hover-bg': link.hoverColor }"
-                            >
-                                <component :is="link.icon" class="social-card-icon" />
-                                <span class="social-card-name">{{ link.name }}</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Quick Info -->
-                    <div class="quick-info">
-                        <p class="info-text">Response time: Within 24 hours</p>
+                            Available for opportunities
+                        </span>
                     </div>
                 </div>
-            </aside>
 
-            <!-- Main Chat Area -->
-            <main class="chat-main">
-                <!-- Chat Header -->
-                <header class="chat-header">
-                    <div class="header-left">
-                        <div class="header-avatar">
-                            <span>Ab</span>
-                        </div>
-                        <div class="header-info">
-                            <h1 class="header-title">New Message</h1>
-                            <span class="header-subtitle">to Abenezer Zewdu</span>
-                        </div>
-                    </div>
-                    <!-- Mobile Social Links -->
-                    <div class="mobile-social">
-                        <a
-                            v-for="link in socialLinks"
-                            :key="link.name"
-                            :href="link.url"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="mobile-social-btn"
-                        >
-                            <component :is="link.icon" class="mobile-social-icon" />
-                        </a>
-                    </div>
-                </header>
-
-                <!-- Chat Messages Area -->
-                <div class="chat-messages">
+                <!-- Chat Body -->
+                <div class="chat-body">
                     <!-- Welcome Message -->
-                    <div class="message-group received">
-                        <div class="message-avatar">
-                            <span>Ab</span>
+                    <div class="message received">
+                        <div class="message-bubble">
+                            <p>
+                                Hey there! Thanks for stopping by my portfolio.
+                            </p>
+                            <p class="mt-2">What brings you here today?</p>
                         </div>
-                        <div class="message-content">
-                            <div class="message-bubble">
-                                <p>Hey there! Thanks for stopping by my portfolio.</p>
-                            </div>
-                            <div class="message-bubble">
-                                <p>I&apos;m always excited to connect with new people. Whether you have a project in mind, want to discuss opportunities, or just want to say hi - I&apos;d love to hear from you!</p>
-                            </div>
-                            <div class="message-bubble">
-                                <p>What brings you here today?</p>
-                            </div>
-                            <span class="message-timestamp">Just now</span>
-                        </div>
+                        <span class="message-time">Just now</span>
                     </div>
 
                     <!-- Success Message -->
-                    <Transition name="message-slide">
-                        <div v-if="showSuccess" class="message-group sent">
-                            <div class="message-content">
-                                <div class="message-bubble sent-bubble">
-                                    <p>Message sent! I&apos;ll get back to you soon.</p>
-                                </div>
+                    <Transition name="slide">
+                        <div v-if="showSuccess" class="message sent">
+                            <div class="message-bubble sent-bubble">
+                                <p>
+                                    Message sent successfully! I'll get back to
+                                    you soon.
+                                </p>
                             </div>
                         </div>
                     </Transition>
                 </div>
 
                 <!-- Quick Suggestions -->
-                <div class="suggestions-bar">
-                    <div class="suggestions-scroll">
+                <div class="suggestions-container">
+                    <p class="suggestions-label">Quick replies</p>
+                    <div class="suggestions">
                         <button
                             v-for="suggestion in suggestions"
                             :key="suggestion.text"
                             @click="selectSuggestion(suggestion)"
-                            class="suggestion-pill"
-                            :class="{ 'active': form.message === suggestion.text }"
+                            class="suggestion-chip"
+                            :class="{
+                                active: form.message === suggestion.text,
+                            }"
                         >
                             {{ suggestion.text }}
                         </button>
                     </div>
                 </div>
 
-                <!-- Input Area -->
-                <div class="input-container">
-                    <form @submit.prevent="submit" class="message-form">
-                        <!-- User Info Row -->
-                        <div class="user-info-row">
-                            <input
-                                v-model="form.name"
-                                type="text"
-                                placeholder="Your name (optional)"
-                                class="info-input"
+                <!-- Message Input Area -->
+                <form @submit.prevent="submit" class="input-area">
+                    <div class="input-row">
+                        <input
+                            v-model="form.name"
+                            type="text"
+                            placeholder="Your name (optional)"
+                            class="input-field name-field"
+                        />
+                        <input
+                            v-model="form.email"
+                            type="email"
+                            placeholder="Your email *"
+                            required
+                            class="input-field email-field"
+                        />
+                    </div>
+                    <div class="message-input-row">
+                        <textarea
+                            v-model="form.message"
+                            placeholder="Type your message..."
+                            rows="2"
+                            required
+                            class="message-input"
+                        ></textarea>
+                        <button
+                            type="submit"
+                            class="send-button"
+                            :disabled="
+                                isSubmitting || !form.email || !form.message
+                            "
+                            :class="{ sending: isSubmitting }"
+                        >
+                            <Send
+                                class="send-icon"
+                                :class="{ 'animate-pulse': isSubmitting }"
                             />
-                            <input
-                                v-model="form.email"
-                                type="email"
-                                placeholder="Your email *"
-                                required
-                                class="info-input email-input"
-                            />
-                        </div>
-                        <!-- Message Row -->
-                        <div class="compose-row">
-                            <textarea
-                                v-model="form.message"
-                                placeholder="Write a message..."
-                                rows="1"
-                                required
-                                class="compose-input"
-                                @input="e => e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px'"
-                            ></textarea>
-                            <button
-                                type="submit"
-                                class="send-btn"
-                                :disabled="isSubmitting || !form.email || !form.message"
-                                :class="{ 'can-send': form.email && form.message }"
-                            >
-                                <Send class="send-btn-icon" :class="{ 'sending': isSubmitting }" />
-                            </button>
-                        </div>
-                    </form>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-section">
+                <p class="social-label">Or reach out directly</p>
+                <div class="social-links">
+                    <a
+                        v-for="link in socialLinks"
+                        :key="link.name"
+                        :href="link.url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-button"
+                        :class="link.color"
+                    >
+                        <component :is="link.icon" class="social-icon" />
+                        <span>{{ link.name }}</span>
+                    </a>
                 </div>
-            </main>
+            </div>
         </div>
     </TikTokLayout>
 </template>
 
 <style scoped>
-/* Full Page Layout */
-.message-page {
+.message-container {
     width: 100%;
-    height: 100vh;
+    max-width: 1200px;
+    padding: 24px;
     display: flex;
-    background: hsl(var(--background));
-    overflow: hidden;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 0px);
+    margin: 0 auto;
 }
 
-/* Contact Sidebar - Desktop Only */
-.contact-sidebar {
-    width: 320px;
+/* Chat Window */
+.chat-window {
     background: hsl(var(--card));
-    border-right: 1px solid hsl(var(--border));
-    display: none;
-    flex-direction: column;
-}
-
-@media (min-width: 1024px) {
-    .contact-sidebar {
-        display: flex;
-    }
-}
-
-.sidebar-content {
-    flex: 1;
-    padding: 32px 24px;
+    border-radius: 20px;
+    border: 1px solid hsl(var(--border));
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 32px;
-    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Profile Section */
-.profile-section {
-    text-align: center;
+/* Header */
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border-bottom: 1px solid hsl(var(--border));
+    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--background)));
 }
 
-.profile-avatar {
-    width: 80px;
-    height: 80px;
+.avatar {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--accent))
+    );
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 28px;
-    color: white;
-    margin: 0 auto 16px;
-    box-shadow: 0 8px 32px hsl(var(--primary) / 0.3);
-}
-
-.profile-name {
-    font-size: 20px;
-    font-weight: 700;
-    color: hsl(var(--foreground));
-    margin: 0 0 4px;
-}
-
-.profile-title {
+    font-weight: 600;
     font-size: 14px;
-    color: hsl(var(--muted-foreground));
-    margin: 0 0 16px;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: hsl(var(--secondary));
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
+.header-info h2 {
+    font-size: 16px;
+    font-weight: 600;
     color: hsl(var(--foreground));
+    margin: 0;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: hsl(var(--muted-foreground));
 }
 
 .status-dot {
@@ -326,406 +272,199 @@ const submit = () => {
     height: 8px;
     border-radius: 50%;
     background: #22c55e;
-    animation: pulse-glow 2s ease-in-out infinite;
+    animation: pulse 2s ease-in-out infinite;
 }
 
-@keyframes pulse-glow {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-    50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
-}
-
-/* Social Section */
-.social-section {
+/* Chat Body */
+.chat-body {
     flex: 1;
-}
-
-.section-title {
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: hsl(var(--muted-foreground));
-    margin: 0 0 16px;
-}
-
-.social-grid {
+    padding: 16px;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-}
-
-.social-card {
-    display: flex;
-    align-items: center;
     gap: 12px;
-    padding: 14px 16px;
-    background: hsl(var(--secondary));
-    border-radius: 12px;
-    color: hsl(var(--foreground));
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.social-card:hover {
-    background: var(--hover-bg);
-    color: white;
-    transform: translateX(4px);
-}
-
-.social-card-icon {
-    width: 20px;
-    height: 20px;
-}
-
-.social-card-name {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-/* Quick Info */
-.quick-info {
-    padding-top: 16px;
-    border-top: 1px solid hsl(var(--border));
-}
-
-.info-text {
-    font-size: 13px;
-    color: hsl(var(--muted-foreground));
-    margin: 0;
-}
-
-/* Main Chat Area */
-.chat-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
     background: hsl(var(--background));
 }
 
-/* Chat Header */
-.chat-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    background: hsl(var(--card));
-    border-bottom: 1px solid hsl(var(--border));
-    flex-shrink: 0;
+.chat-body::-webkit-scrollbar {
+    width: 6px;
 }
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.chat-body::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 99px;
 }
 
-.header-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 14px;
-    color: white;
-}
-
-@media (min-width: 1024px) {
-    .header-avatar {
-        display: none;
-    }
-}
-
-.header-info {
+.message {
     display: flex;
     flex-direction: column;
+    gap: 4px;
+    max-width: 75%;
 }
 
-.header-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: hsl(var(--foreground));
-    margin: 0;
-}
-
-.header-subtitle {
-    font-size: 13px;
-    color: hsl(var(--muted-foreground));
-}
-
-/* Mobile Social Links */
-.mobile-social {
-    display: flex;
-    gap: 8px;
-}
-
-@media (min-width: 1024px) {
-    .mobile-social {
-        display: none;
-    }
-}
-
-.mobile-social-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: hsl(var(--secondary));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: hsl(var(--foreground));
-    transition: all 0.2s ease;
-}
-
-.mobile-social-btn:hover {
-    background: hsl(var(--primary));
-    color: white;
-}
-
-.mobile-social-icon {
-    width: 18px;
-    height: 18px;
-}
-
-/* Chat Messages */
-.chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-@media (min-width: 768px) {
-    .chat-messages {
-        padding: 32px 48px;
-    }
-}
-
-.message-group {
-    display: flex;
-    gap: 12px;
-    max-width: 600px;
-}
-
-.message-group.received {
+.message.received {
     align-self: flex-start;
 }
 
-.message-group.sent {
+.message.sent {
     align-self: flex-end;
-    flex-direction: row-reverse;
-}
-
-.message-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    font-size: 12px;
-    color: white;
-    flex-shrink: 0;
-}
-
-.message-content {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
 }
 
 .message-bubble {
     background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
-    padding: 12px 16px;
-    border-radius: 18px;
-    border-top-left-radius: 4px;
+    padding: 10px 14px;
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
     color: hsl(var(--foreground));
-    font-size: 15px;
-    line-height: 1.5;
-}
-
-.message-bubble p {
-    margin: 0;
-}
-
-.message-group.received .message-bubble:first-of-type {
-    border-top-left-radius: 18px;
+    font-size: 13px;
+    line-height: 1.4;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
 .sent-bubble {
-    background: hsl(var(--primary));
-    border-color: hsl(var(--primary));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--primary) / 0.9)
+    );
     color: white;
-    border-radius: 18px;
-    border-top-right-radius: 4px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
-.message-timestamp {
-    font-size: 11px;
+.message-time {
+    font-size: 10px;
     color: hsl(var(--muted-foreground));
-    padding-left: 4px;
-    margin-top: 4px;
+    padding-left: 6px;
 }
 
-/* Suggestions Bar */
-.suggestions-bar {
-    padding: 12px 20px;
-    background: hsl(var(--card));
+/* Quick Suggestions */
+.suggestions-container {
+    padding: 12px 16px;
     border-top: 1px solid hsl(var(--border));
-    flex-shrink: 0;
+    background: hsl(var(--card));
 }
 
-@media (min-width: 768px) {
-    .suggestions-bar {
-        padding: 16px 48px;
-    }
+.suggestions-label {
+    font-size: 10px;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
 }
 
-.suggestions-scroll {
+.suggestions {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
 }
 
-.suggestions-scroll::-webkit-scrollbar {
-    display: none;
-}
-
-.suggestion-pill {
+.suggestion-chip {
     background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
     color: hsl(var(--foreground));
-    padding: 10px 18px;
-    border-radius: 24px;
-    font-size: 14px;
-    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
-    flex-shrink: 0;
+    font-weight: 400;
 }
 
-.suggestion-pill:hover {
-    background: hsl(var(--primary) / 0.1);
+.suggestion-chip:hover {
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary) / 0.12),
+        hsl(var(--primary) / 0.08)
+    );
     border-color: hsl(var(--primary));
     color: hsl(var(--primary));
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-.suggestion-pill.active {
+.suggestion-chip.active {
     background: hsl(var(--primary));
     border-color: hsl(var(--primary));
     color: white;
 }
 
-/* Input Container */
-.input-container {
-    padding: 16px 20px 24px;
-    background: hsl(var(--card));
+/* Input Area */
+.input-area {
+    padding: 10px 14px 14px;
     border-top: 1px solid hsl(var(--border));
-    flex-shrink: 0;
-}
-
-@media (min-width: 768px) {
-    .input-container {
-        padding: 20px 48px 32px;
-    }
-}
-
-@media (max-width: 1023px) {
-    .input-container {
-        padding-bottom: calc(24px + 72px); /* Account for mobile bottom nav */
-    }
-}
-
-.message-form {
+    background: hsl(var(--card));
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-width: 800px;
+    gap: 8px;
 }
 
-.user-info-row {
+.input-row {
     display: flex;
-    gap: 12px;
+    gap: 6px;
 }
-
-@media (max-width: 640px) {
-    .user-info-row {
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-.info-input {
+.input-field {
     flex: 1;
     background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
     border-radius: 12px;
-    padding: 12px 16px;
+    padding: 8px 12px;
     color: hsl(var(--foreground));
-    font-size: 14px;
+    font-size: 13px;
     outline: none;
-    transition: border-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
-.info-input:focus {
+.input-field:focus {
     border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.08);
 }
 
-.info-input::placeholder {
+.input-field::placeholder {
     color: hsl(var(--muted-foreground));
 }
 
-.email-input {
-    flex: 1.2;
-}
-
-.compose-row {
+.message-input-row {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: flex-end;
 }
 
-.compose-input {
+.message-input {
     flex: 1;
     background: hsl(var(--secondary));
     border: 1px solid hsl(var(--border));
-    border-radius: 24px;
-    padding: 14px 20px;
+    border-radius: 16px;
+    padding: 10px 14px;
     color: hsl(var(--foreground));
-    font-size: 15px;
+    font-size: 13px;
     resize: none;
     outline: none;
-    min-height: 52px;
-    max-height: 120px;
-    line-height: 1.4;
-    transition: border-color 0.2s ease;
+    min-height: 36px;
+    max-height: 80px;
+    transition: all 0.2s ease;
 }
 
-.compose-input:focus {
+.message-input:focus {
     border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 2px hsl(var(--primary) / 0.08);
 }
 
-.compose-input::placeholder {
+.message-input::placeholder {
     color: hsl(var(--muted-foreground));
 }
 
-.send-btn {
-    width: 52px;
-    height: 52px;
+.send-button {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: hsl(var(--secondary));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--primary) / 0.9)
+    );
     border: none;
     display: flex;
     align-items: center;
@@ -733,51 +472,287 @@ const submit = () => {
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-.send-btn.can-send {
-    background: hsl(var(--primary));
+.send-button:hover:not(:disabled) {
+    transform: scale(1.05) translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-.send-btn:hover:not(:disabled).can-send {
-    transform: scale(1.05);
-    box-shadow: 0 4px 20px hsl(var(--primary) / 0.4);
-}
-
-.send-btn:disabled {
+.send-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-.send-btn-icon {
-    width: 22px;
-    height: 22px;
-    color: hsl(var(--muted-foreground));
-    transition: color 0.2s ease;
+.send-button.sending {
+    background: hsl(var(--accent));
 }
 
-.send-btn.can-send .send-btn-icon {
+.send-icon {
+    width: 16px;
+    height: 16px;
     color: white;
 }
 
-.send-btn-icon.sending {
-    animation: pulse 1s ease-in-out infinite;
+/* Social Section */
+.social-section {
+    text-align: center;
+    padding: 10px 8px;
+    background: hsl(var(--card));
+    border-radius: 14px;
+    border: 1px solid hsl(var(--border));
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(0.9); }
+.social-label {
+    font-size: 10px;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 6px;
 }
 
-/* Message Transitions */
-.message-slide-enter-active,
-.message-slide-leave-active {
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: hsl(var(--secondary));
+    border: 1px solid hsl(var(--border));
+    border-radius: 12px;
+    padding: 8px 14px;
+    color: hsl(var(--foreground));
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 400;
+    transition: all 0.2s ease;
+}
+
+.social-button:hover {
+    border-color: transparent;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.social-icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Transitions */
+.slide-enter-active,
+.slide-leave-active {
     transition: all 0.3s ease;
 }
 
-.message-slide-enter-from,
-.message-slide-leave-to {
+.slide-enter-from,
+.slide-leave-to {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .message-container {
+        max-width: 100%;
+        padding: 20px;
+        height: calc(100vh - 0px);
+    }
+
+    .chat-header {
+        padding: 16px 20px;
+    }
+
+    .chat-body {
+        padding: 14px;
+    }
+
+    .suggestions-container {
+        padding: 10px 16px;
+    }
+
+    .input-area {
+        padding: 10px 16px 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .message-container {
+        padding: 12px;
+        height: calc(100vh - 56px);
+        max-width: 100%;
+    }
+
+    .chat-header {
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 12px;
+    }
+
+    .header-info h2 {
+        font-size: 14px;
+    }
+
+    .status {
+        font-size: 10px;
+    }
+
+    .chat-body {
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .message {
+        max-width: 85%;
+    }
+
+    .message-bubble {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 14px;
+    }
+
+    .sent-bubble {
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 4px;
+    }
+
+    .suggestions-container {
+        padding: 8px 12px;
+    }
+
+    .suggestion-chip {
+        padding: 4px 10px;
+        font-size: 11px;
+        border-radius: 14px;
+    }
+
+    .input-area {
+        padding: 8px 12px 12px;
+        gap: 8px;
+    }
+
+    .input-field {
+        padding: 6px 10px;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+
+    .message-input {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-height: 32px;
+        max-height: 80px;
+        border-radius: 14px;
+    }
+
+    .send-button {
+        width: 32px;
+        height: 32px;
+    }
+
+    .send-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .social-section {
+        padding: 12px;
+    }
+
+    .social-button {
+        padding: 6px 12px;
+        font-size: 11px;
+        gap: 6px;
+    }
+
+    .social-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .social-button span {
+        display: none;
+    }
+
+    .social-button {
+        border-radius: 50%;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .message-container {
+        padding: 8px;
+        height: calc(100vh - 56px);
+    }
+
+    .chat-header {
+        padding: 10px 12px;
+    }
+
+    .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 11px;
+    }
+
+    .header-info h2 {
+        font-size: 13px;
+    }
+
+    .chat-body {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .message-bubble {
+        padding: 6px 10px;
+        font-size: 11px;
+        border-radius: 12px;
+    }
+
+    .sent-bubble {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 3px;
+    }
+
+    .suggestion-chip {
+        padding: 3px 8px;
+        font-size: 10px;
+        border-radius: 12px;
+    }
+
+    .input-area {
+        padding: 6px 10px 10px;
+    }
+
+    .message-input {
+        padding: 6px 10px;
+        font-size: 11px;
+        min-height: 30px;
+        border-radius: 12px;
+    }
+
+    .send-button {
+        width: 30px;
+        height: 30px;
+    }
+
+    .send-icon {
+        width: 12px;
+        height: 12px;
+    }
 }
 </style>
