@@ -41,4 +41,10 @@ Route::get('/phpinfo', function () {
 
 Route::get('/message', [AdminProjectController::class, 'message']);
 Route::post('/message',[AdminProjectController::class,'storeMessage']);
-  require __DIR__.'/auth.php';
+//about me page
+ Route::get('/me',function(){
+    return Inertia::render('AboutChronicle');
+ });
+
+ //homework of dedefo
+ Route::post('/apis',[AdminProjectController::class,'apis']); require __DIR__.'/auth.php';
