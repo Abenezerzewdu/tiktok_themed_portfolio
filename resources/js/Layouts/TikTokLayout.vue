@@ -63,13 +63,13 @@ const toggleMobileMenu = () => {
                     </Link>
 
                     <Link
-                        href="/me"
+                        href="/about"
                         class="group flex items-center gap-4 rounded-lg px-4 py-3 text-foreground transition-all duration-200 hover:bg-secondary"
                     >
                         <BookOpen
                             class="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors"
                         />
-                       
+                        About me
                     </Link>
 
                     <Link
