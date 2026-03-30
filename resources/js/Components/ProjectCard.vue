@@ -12,12 +12,26 @@ import {
     VolumeX,
     ExternalLink,
 } from "lucide-vue-next";
+import { computed } from "vue";
 
 const props = defineProps({
     project: Object,
     isActive: Boolean,
 });
+const isExpanded = ref(false);
+const maxLength = 20; // adjust based on your UI
 
+const truncatedText = computed(() => {
+    return props.project.description?.slice(0, maxLength);
+});
+
+const isLong = computed(() => {
+    return props.project.description?.length > maxLength;
+});
+
+const toggleDescription = () => {
+    isExpanded.value = !isExpanded.value;
+};
 const videoRef = ref(null);
 const isPlaying = ref(false);
 const isMuted = ref(true);
@@ -33,7 +47,7 @@ onMounted(() => {
                 pauseVideo();
             }
         },
-        { threshold: 0.7 }
+        { threshold: 0.7 },
     );
 
     if (videoRef.value) {
@@ -120,12 +134,12 @@ const formatCount = (num) => {
         >
             <video
                 ref="videoRef"
-                :src="project.video_url"
+                :src="props.project.video_url"
                 :muted="isMuted"
                 loop
                 playsinline
                 class="video"
-                :poster="project.thumbnail_url"
+                :poster="props.project.thumbnail_url"
             ></video>
 
             <!-- Play/Pause overlay -->
@@ -154,10 +168,7 @@ const formatCount = (num) => {
                 leave-to-class="opacity-0"
             >
                 <div v-if="showControls" class="video-controls">
-                    <button
-                        @click.stop="toggleMute"
-                        class="control-btn"
-                    >
+                    <button @click.stop="toggleMute" class="control-btn">
                         <Volume2 v-if="!isMuted" class="h-5 w-5" />
                         <VolumeX v-else class="h-5 w-5" />
                     </button>
@@ -169,24 +180,44 @@ const formatCount = (num) => {
                 <!-- Creator info -->
                 <div class="creator-info">
                     <div class="creator-avatar">
-                        <span class="text-sm font-bold text-primary-foreground">{{
-                            project.title?.charAt(0)?.toUpperCase() || "P"
-                        }}</span>
+                        <span
+                            class="text-sm font-bold text-primary-foreground"
+                            >{{
+                                props.project.title?.charAt(0)?.toUpperCase() ||
+                                "P"
+                            }}</span
+                        >
                     </div>
                     <div class="creator-details">
-                        <h3 class="creator-name">{{ project.title }}</h3>
+                        <h3 class="creator-name">{{ props.project.title }}</h3>
                         <p class="creator-handle">@abe.dev</p>
                     </div>
                     <button class="follow-btn">Follow</button>
                 </div>
 
                 <!-- Description -->
-                <p class="description">
-                    {{ project.description }}
-                </p>
+                <!-- Description -->
+                <div class="description-wrapper">
+                    <p class="description">
+                        {{
+                            isExpanded
+                                ? props.project.description
+                                : truncatedText
+                        }}
+                        <span v-if="!isExpanded && isLong">...</span>
+                    </p>
+
+                    <button
+                        v-if="isLong"
+                        @click="toggleDescription"
+                        class="toggle-btn"
+                    >
+                        {{ isExpanded ? "See less" : "See more" }}
+                    </button>
+                </div>
 
                 <!-- Tech Stack -->
-                <div v-if="project.tech_stack?.length" class="tech-stack">
+                <!-- <div v-if="props.project.tech_stack?.length" class="tech-stack">
                     <span
                         v-for="tech in project.tech_stack.slice(0, 4)"
                         :key="tech"
@@ -194,7 +225,7 @@ const formatCount = (num) => {
                     >
                         #{{ tech }}
                     </span>
-                </div>
+                </div> -->
 
                 <!-- Links -->
                 <div class="project-links">
@@ -233,7 +264,9 @@ const formatCount = (num) => {
                 <div class="action-icon">
                     <MessageCircle />
                 </div>
-                <span class="action-count">{{ formatCount(commentCount) }}</span>
+                <span class="action-count">{{
+                    formatCount(commentCount)
+                }}</span>
             </button>
 
             <!-- Save -->
@@ -291,7 +324,7 @@ const formatCount = (num) => {
         max-height: 100%;
         height: 100%;
     }
-    
+
     .card {
         gap: 0;
     }
@@ -322,7 +355,9 @@ const formatCount = (num) => {
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(8px);
-    transition: transform 0.2s ease, background 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
 }
 
 .play-button:hover {
@@ -362,7 +397,12 @@ const formatCount = (num) => {
     left: 0;
     right: 0;
     padding: 80px 16px 24px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 50%, transparent 100%);
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        transparent 100%
+    );
 }
 
 /* Creator Info */
@@ -380,7 +420,11 @@ const formatCount = (num) => {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--accent))
+    );
     flex-shrink: 0;
 }
 
@@ -430,6 +474,26 @@ const formatCount = (num) => {
     margin-bottom: 12px;
 }
 
+.description-wrapper {
+    position: relative;
+}
+
+/* .description {
+    margin-bottom: 20px;
+} */
+
+.toggle-btn {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: none;
+    border: none;
+    color: black;
+    font-weight: 600;
+    cursor: pointer;
+}
+/* finished the description section */
+
 /* Tech Stack */
 .tech-stack {
     display: flex;
@@ -455,7 +519,7 @@ const formatCount = (num) => {
     align-items: center;
     gap: 6px;
     padding: 8px 16px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 500;
     border-radius: 999px;
     transition: all 0.2s ease;
@@ -539,7 +603,11 @@ const formatCount = (num) => {
 .avatar-ring {
     padding: 2px;
     border-radius: 50%;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--accent))
+    );
 }
 
 .action-avatar {
@@ -577,7 +645,11 @@ const formatCount = (num) => {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    background: linear-gradient(
+        135deg,
+        hsl(var(--primary)),
+        hsl(var(--accent))
+    );
 }
 
 @keyframes spin {

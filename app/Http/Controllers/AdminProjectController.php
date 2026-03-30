@@ -55,7 +55,9 @@ class AdminProjectController extends Controller
     return  Inertia::render('Message');
     }
 
-
+   public function storeMessage(){
+   
+   }
 
 
     // just class hw
