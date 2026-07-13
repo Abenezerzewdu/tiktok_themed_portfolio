@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
  use App\Models\Message;
 use App\Models\Project;
+use App\Services\BlobStorage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -24,20 +25,29 @@ class AdminProjectController extends Controller
     // ]);
     $request->validate([
             'title' => 'required|string',
-            'video' => 'required|file|mimes:mp4,mov,avi|max:20000',
+            // Capped at ~4MB: Vercel serverless functions reject request bodies
+            // larger than 4.5MB, so we validate below that for a clean error.
+            'video' => 'required|file|mimes:mp4,mov,avi|max:4096',
             'github_url' => 'nullable|url',
             'live_url' => 'nullable|url',
         ]);
 
-    //get video and store
-    $videoPath=$request->file('video')->store('videos','public');
+    // Store the video. On Vercel the filesystem is read-only, so when Blob is
+    // configured we upload to durable object storage; otherwise (local dev)
+    // fall back to the public disk.
+    if (BlobStorage::isEnabled()) {
+        $videoUrl = BlobStorage::upload($request->file('video'), 'videos');
+    } else {
+        $videoPath = $request->file('video')->store('videos', 'public');
+        $videoUrl = '/storage/' . $videoPath;
+    }
 
     //store the project
     Project::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title) . '-' . uniqid(),
             'description' => $request->description,
-            'video_url' => '/storage/' . $videoPath,
+            'video_url' => $videoUrl,
             'github_url' => $request->github_url,
             'live_url' => $request->live_url,
             'tech_stack' => explode(',', $request->tech_stack),
