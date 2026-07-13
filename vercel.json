@@ -7,8 +7,8 @@
     }
   },
   "outputDirectory": "public",
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install --frozen-lockfile",
   "routes": [
     { "src": "/build/(.*)", "dest": "/build/$1" },
     { "src": "/(.+\\.(?:js|mjs|css|png|jpe?g|gif|svg|webp|ico|txt|xml|woff2?|ttf|otf|eot|map|mp4|webm|mp3|json))", "dest": "/$1" },
